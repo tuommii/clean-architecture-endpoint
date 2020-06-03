@@ -30,7 +30,7 @@ namespace Sanoma.Infrastructure.Persistence
 					{
 						new OrderItem { Name = "New laptop", Price = 2499.99 },
 						new OrderItem { Name = "New phone", Price = 199.98 },
-						new OrderItem { Name = "Programming job" },
+						new OrderItem { Name = "IT-job" },
 					}
 				});
 
