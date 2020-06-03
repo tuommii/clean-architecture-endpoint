@@ -778,6 +778,7 @@ export class WeatherForecastClient implements IWeatherForecastClient {
 export class CreateOrderItemCommand implements ICreateOrderItemCommand {
     listId?: number;
     name?: string | undefined;
+    price?: number;
 
     constructor(data?: ICreateOrderItemCommand) {
         if (data) {
@@ -792,6 +793,7 @@ export class CreateOrderItemCommand implements ICreateOrderItemCommand {
         if (_data) {
             this.listId = _data["listId"];
             this.name = _data["name"];
+            this.price = _data["price"];
         }
     }
 
@@ -806,6 +808,7 @@ export class CreateOrderItemCommand implements ICreateOrderItemCommand {
         data = typeof data === 'object' ? data : {};
         data["listId"] = this.listId;
         data["name"] = this.name;
+        data["price"] = this.price;
         return data; 
     }
 }
@@ -813,6 +816,7 @@ export class CreateOrderItemCommand implements ICreateOrderItemCommand {
 export interface ICreateOrderItemCommand {
     listId?: number;
     name?: string | undefined;
+    price?: number;
 }
 
 export class CreateOrderListCommand implements ICreateOrderListCommand {

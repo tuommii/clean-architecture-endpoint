@@ -11,6 +11,8 @@ namespace Sanoma.Application.OrderItems.Commands.CreateOrderItem
         public int ListId { get; set; }
 
         public string Name { get; set; }
+
+		public double Price { get; set; }
     }
 
     public class CreateOrderItemCommandHandler : IRequestHandler<CreateOrderItemCommand, int>
@@ -28,7 +30,7 @@ namespace Sanoma.Application.OrderItems.Commands.CreateOrderItem
             {
                 ListId = request.ListId,
                 Name = request.Name,
-                Price = 0
+                Price = request.Price
             };
 
             _context.OrderItems.Add(entity);
