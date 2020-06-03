@@ -11,6 +11,10 @@ namespace Sanoma.Application.Common.Interfaces
 
         DbSet<TodoItem> TodoItems { get; set; }
 
+        DbSet<OrderList> OrderLists { get; set; }
+
+        DbSet<OrderItem> OrderItems { get; set; }
+
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     }
 }

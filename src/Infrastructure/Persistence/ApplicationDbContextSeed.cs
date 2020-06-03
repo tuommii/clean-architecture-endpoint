@@ -20,6 +20,23 @@ namespace Sanoma.Infrastructure.Persistence
 
         public static async Task SeedSampleDataAsync(ApplicationDbContext context)
         {
+
+			if (!context.OrderLists.Any())
+			{
+				context.OrderLists.Add(new OrderList
+				{
+					Title = "Miikka'a Orders",
+					Items =
+					{
+						new OrderItem { Name = "New laptop", Price = 2499.99 },
+						new OrderItem { Name = "New phone", Price = 199.98 },
+						new OrderItem { Name = "Programming job" },
+					}
+				});
+
+				await context.SaveChangesAsync();
+			}
+
             // Seed, if necessary
             if (!context.TodoLists.Any())
             {

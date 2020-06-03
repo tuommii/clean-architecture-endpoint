@@ -10,7 +10,7 @@ namespace Sanoma.Domain.Entities
 
 		public string Name { get; set; }
 
-		public float Price { get; set; }
+		public double Price { get; set; }
 
 		public OrderList List { get; set; }
 

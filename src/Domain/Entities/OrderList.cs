@@ -14,8 +14,6 @@ namespace Sanoma.Domain.Entities
 
         public string Title { get; set; }
 
-        public string Colour { get; set; }
-
         public IList<OrderItem> Items { get; set; }
     }
 }
