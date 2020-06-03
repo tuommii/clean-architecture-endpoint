@@ -2,8 +2,7 @@ using Sanoma.Application.OrderLists.Commands.CreateOrderList;
 // using Sanoma.Application.OrderLists.Commands.DeleteOrderList;
 // using Sanoma.Application.OrderLists.Commands.UpdateOrderList;
 // using Sanoma.Application.OrderLists.Queries.ExportOrders;
-// using Sanoma.Application.OrderLists.Queries.GetOrders;
-using Microsoft.AspNetCore.Authorization;
+using Sanoma.Application.OrderLists.Queries.GetOrders;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -17,11 +16,11 @@ namespace Sanoma.WebUI.Controllers
             return await Mediator.Send(command);
         }
 
-        // [HttpGet]
-        // public async Task<ActionResult<OrdersVm>> Get()
-        // {
-        //     return await Mediator.Send(new GetOrdersQuery());
-        // }
+        [HttpGet]
+        public async Task<ActionResult<OrdersVm>> Get()
+        {
+            return await Mediator.Send(new GetOrdersQuery());
+        }
 
         // [HttpGet("{id}")]
         // public async Task<FileResult> Get(int id)
