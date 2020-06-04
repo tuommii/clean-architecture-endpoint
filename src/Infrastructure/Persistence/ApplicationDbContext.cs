@@ -34,9 +34,7 @@ namespace Sanoma.Infrastructure.Persistence
 
         public DbSet<TodoItem> TodoItems { get; set; }
 
-        public DbSet<OrderList> OrderLists { get; set; }
-
-        public DbSet<OrderItem> OrderItems { get; set; }
+		public DbSet<Order> Orders { get; set; }
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {

@@ -1,15 +1,16 @@
-using Sanoma.Application.OrderItems.Commands.CreateOrderItem;
+using Sanoma.Application.Orders.Queries.GetOrders;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
 namespace Sanoma.WebUI.Controllers
 {
-    public class OrderItemsController : ApiController
+    public class OrdersController : ApiController
     {
-        [HttpPost]
-        public async Task<ActionResult<int>> Create(CreateOrderItemCommand command)
+        [HttpGet]
+        public async Task<ActionResult<OrdersVm>> Get()
         {
-            return await Mediator.Send(command);
+			var vm = await Mediator.Send(new GetOrdersQuery());
+			return base.Ok(vm);
         }
 	}
 

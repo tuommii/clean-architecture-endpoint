@@ -6,76 +6,12 @@
     "version": "1.0.0"
   },
   "paths": {
-    "/api/OrderItems": {
-      "post": {
-        "tags": [
-          "OrderItems"
-        ],
-        "operationId": "OrderItems_Create",
-        "requestBody": {
-          "x-name": "command",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateOrderItemCommand"
-              }
-            }
-          },
-          "required": true,
-          "x-position": 1
-        },
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "integer",
-                  "format": "int32"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/OrderLists": {
-      "post": {
-        "tags": [
-          "OrderLists"
-        ],
-        "operationId": "OrderLists_Create",
-        "requestBody": {
-          "x-name": "command",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateOrderListCommand"
-              }
-            }
-          },
-          "required": true,
-          "x-position": 1
-        },
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "integer",
-                  "format": "int32"
-                }
-              }
-            }
-          }
-        }
-      },
+    "/api/Orders": {
       "get": {
         "tags": [
-          "OrderLists"
+          "Orders"
         ],
-        "operationId": "OrderLists_Get",
+        "operationId": "Orders_Get",
         "responses": {
           "200": {
             "description": "",
@@ -472,34 +408,6 @@
   },
   "components": {
     "schemas": {
-      "CreateOrderItemCommand": {
-        "type": "object",
-        "additionalProperties": false,
-        "properties": {
-          "listId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "name": {
-            "type": "string",
-            "nullable": true
-          },
-          "price": {
-            "type": "number",
-            "format": "double"
-          }
-        }
-      },
-      "CreateOrderListCommand": {
-        "type": "object",
-        "additionalProperties": false,
-        "properties": {
-          "title": {
-            "type": "string",
-            "nullable": true
-          }
-        }
-      },
       "OrdersVm": {
         "type": "object",
         "additionalProperties": false,
@@ -508,51 +416,22 @@
             "type": "array",
             "nullable": true,
             "items": {
-              "$ref": "#/components/schemas/OrderListDto"
+              "$ref": "#/components/schemas/OrderDto"
             }
           }
         }
       },
-      "OrderListDto": {
+      "OrderDto": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
           "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "title": {
-            "type": "string",
-            "nullable": true
-          },
-          "items": {
-            "type": "array",
-            "nullable": true,
-            "items": {
-              "$ref": "#/components/schemas/OrderItemDto"
-            }
-          }
-        }
-      },
-      "OrderItemDto": {
-        "type": "object",
-        "additionalProperties": false,
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "listId": {
             "type": "integer",
             "format": "int32"
           },
           "name": {
             "type": "string",
             "nullable": true
-          },
-          "price": {
-            "type": "number",
-            "format": "double"
           }
         }
       },

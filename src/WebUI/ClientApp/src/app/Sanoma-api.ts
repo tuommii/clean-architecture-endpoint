@@ -14,85 +14,14 @@ import { HttpClient, HttpHeaders, HttpResponse, HttpResponseBase } from '@angula
 
 export const API_BASE_URL = new InjectionToken<string>('API_BASE_URL');
 
-export interface IOrderItemsClient {
-    create(command: CreateOrderItemCommand): Observable<number>;
-}
-
-@Injectable({
-    providedIn: 'root'
-})
-export class OrderItemsClient implements IOrderItemsClient {
-    private http: HttpClient;
-    private baseUrl: string;
-    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
-
-    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
-        this.http = http;
-        this.baseUrl = baseUrl ? baseUrl : "";
-    }
-
-    create(command: CreateOrderItemCommand): Observable<number> {
-        let url_ = this.baseUrl + "/api/OrderItems";
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(command);
-
-        let options_ : any = {
-            body: content_,
-            observe: "response",
-            responseType: "blob",			
-            headers: new HttpHeaders({
-                "Content-Type": "application/json", 
-                "Accept": "application/json"
-            })
-        };
-
-        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processCreate(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processCreate(<any>response_);
-                } catch (e) {
-                    return <Observable<number>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<number>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processCreate(response: HttpResponseBase): Observable<number> {
-        const status = response.status;
-        const responseBlob = 
-            response instanceof HttpResponse ? response.body : 
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = resultData200 !== undefined ? resultData200 : <any>null;
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<number>(<any>null);
-    }
-}
-
-export interface IOrderListsClient {
-    create(command: CreateOrderListCommand): Observable<number>;
+export interface IOrdersClient {
     get(): Observable<OrdersVm>;
 }
 
 @Injectable({
     providedIn: 'root'
 })
-export class OrderListsClient implements IOrderListsClient {
+export class OrdersClient implements IOrdersClient {
     private http: HttpClient;
     private baseUrl: string;
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
@@ -102,60 +31,8 @@ export class OrderListsClient implements IOrderListsClient {
         this.baseUrl = baseUrl ? baseUrl : "";
     }
 
-    create(command: CreateOrderListCommand): Observable<number> {
-        let url_ = this.baseUrl + "/api/OrderLists";
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(command);
-
-        let options_ : any = {
-            body: content_,
-            observe: "response",
-            responseType: "blob",			
-            headers: new HttpHeaders({
-                "Content-Type": "application/json", 
-                "Accept": "application/json"
-            })
-        };
-
-        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processCreate(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processCreate(<any>response_);
-                } catch (e) {
-                    return <Observable<number>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<number>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processCreate(response: HttpResponseBase): Observable<number> {
-        const status = response.status;
-        const responseBlob = 
-            response instanceof HttpResponse ? response.body : 
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = resultData200 !== undefined ? resultData200 : <any>null;
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<number>(<any>null);
-    }
-
     get(): Observable<OrdersVm> {
-        let url_ = this.baseUrl + "/api/OrderLists";
+        let url_ = this.baseUrl + "/api/Orders";
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {
@@ -775,88 +652,8 @@ export class WeatherForecastClient implements IWeatherForecastClient {
     }
 }
 
-export class CreateOrderItemCommand implements ICreateOrderItemCommand {
-    listId?: number;
-    name?: string | undefined;
-    price?: number;
-
-    constructor(data?: ICreateOrderItemCommand) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.listId = _data["listId"];
-            this.name = _data["name"];
-            this.price = _data["price"];
-        }
-    }
-
-    static fromJS(data: any): CreateOrderItemCommand {
-        data = typeof data === 'object' ? data : {};
-        let result = new CreateOrderItemCommand();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["listId"] = this.listId;
-        data["name"] = this.name;
-        data["price"] = this.price;
-        return data; 
-    }
-}
-
-export interface ICreateOrderItemCommand {
-    listId?: number;
-    name?: string | undefined;
-    price?: number;
-}
-
-export class CreateOrderListCommand implements ICreateOrderListCommand {
-    title?: string | undefined;
-
-    constructor(data?: ICreateOrderListCommand) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.title = _data["title"];
-        }
-    }
-
-    static fromJS(data: any): CreateOrderListCommand {
-        data = typeof data === 'object' ? data : {};
-        let result = new CreateOrderListCommand();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["title"] = this.title;
-        return data; 
-    }
-}
-
-export interface ICreateOrderListCommand {
-    title?: string | undefined;
-}
-
 export class OrdersVm implements IOrdersVm {
-    lists?: OrderListDto[] | undefined;
+    lists?: OrderDto[] | undefined;
 
     constructor(data?: IOrdersVm) {
         if (data) {
@@ -872,7 +669,7 @@ export class OrdersVm implements IOrdersVm {
             if (Array.isArray(_data["lists"])) {
                 this.lists = [] as any;
                 for (let item of _data["lists"])
-                    this.lists!.push(OrderListDto.fromJS(item));
+                    this.lists!.push(OrderDto.fromJS(item));
             }
         }
     }
@@ -896,68 +693,14 @@ export class OrdersVm implements IOrdersVm {
 }
 
 export interface IOrdersVm {
-    lists?: OrderListDto[] | undefined;
+    lists?: OrderDto[] | undefined;
 }
 
-export class OrderListDto implements IOrderListDto {
+export class OrderDto implements IOrderDto {
     id?: number;
-    title?: string | undefined;
-    items?: OrderItemDto[] | undefined;
-
-    constructor(data?: IOrderListDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.id = _data["id"];
-            this.title = _data["title"];
-            if (Array.isArray(_data["items"])) {
-                this.items = [] as any;
-                for (let item of _data["items"])
-                    this.items!.push(OrderItemDto.fromJS(item));
-            }
-        }
-    }
-
-    static fromJS(data: any): OrderListDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new OrderListDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["title"] = this.title;
-        if (Array.isArray(this.items)) {
-            data["items"] = [];
-            for (let item of this.items)
-                data["items"].push(item.toJSON());
-        }
-        return data; 
-    }
-}
-
-export interface IOrderListDto {
-    id?: number;
-    title?: string | undefined;
-    items?: OrderItemDto[] | undefined;
-}
-
-export class OrderItemDto implements IOrderItemDto {
-    id?: number;
-    listId?: number;
     name?: string | undefined;
-    price?: number;
 
-    constructor(data?: IOrderItemDto) {
+    constructor(data?: IOrderDto) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -969,15 +712,13 @@ export class OrderItemDto implements IOrderItemDto {
     init(_data?: any) {
         if (_data) {
             this.id = _data["id"];
-            this.listId = _data["listId"];
             this.name = _data["name"];
-            this.price = _data["price"];
         }
     }
 
-    static fromJS(data: any): OrderItemDto {
+    static fromJS(data: any): OrderDto {
         data = typeof data === 'object' ? data : {};
-        let result = new OrderItemDto();
+        let result = new OrderDto();
         result.init(data);
         return result;
     }
@@ -985,18 +726,14 @@ export class OrderItemDto implements IOrderItemDto {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id;
-        data["listId"] = this.listId;
         data["name"] = this.name;
-        data["price"] = this.price;
         return data; 
     }
 }
 
-export interface IOrderItemDto {
+export interface IOrderDto {
     id?: number;
-    listId?: number;
     name?: string | undefined;
-    price?: number;
 }
 
 export class CreateTodoItemCommand implements ICreateTodoItemCommand {

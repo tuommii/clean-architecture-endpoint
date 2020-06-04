@@ -7,13 +7,11 @@ namespace Sanoma.Application.Common.Interfaces
 {
     public interface IApplicationDbContext
     {
+		DbSet<Order> Orders { get; set; }
+
         DbSet<TodoList> TodoLists { get; set; }
 
         DbSet<TodoItem> TodoItems { get; set; }
-
-        DbSet<OrderList> OrderLists { get; set; }
-
-        DbSet<OrderItem> OrderItems { get; set; }
 
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     }
