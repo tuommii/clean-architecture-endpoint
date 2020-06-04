@@ -12,7 +12,7 @@ namespace Sanoma.Domain.Entities
 
 		public double Price { get; set; }
 
-		public OrderList List { get; set; }
+		public OrderList List { get; private set; }
 
     }
 }
