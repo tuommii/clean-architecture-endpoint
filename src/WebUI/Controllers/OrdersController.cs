@@ -1,6 +1,7 @@
 using Sanoma.Application.Orders.Queries.GetOrders;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using Sanoma.Application.Orders.Commands;
 
 namespace Sanoma.WebUI.Controllers
 {
@@ -12,6 +13,12 @@ namespace Sanoma.WebUI.Controllers
 			var vm = await Mediator.Send(new GetOrdersQuery());
 			return base.Ok(vm);
         }
+
+		[HttpPost]
+		public async Task<ActionResult<int>> Create(CreateOrderCommand command)
+		{
+			return await Mediator.Send(command);
+		}
 	}
 
     //     [HttpPut("{id}")]

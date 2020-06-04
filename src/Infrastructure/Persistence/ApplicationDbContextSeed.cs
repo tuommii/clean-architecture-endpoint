@@ -22,10 +22,9 @@ namespace Sanoma.Infrastructure.Persistence
         {
 			if (!context.Orders.Any())
 			{
-				context.Orders.Add(new Order
-				{
-					Name = "Order 1"
-				});
+				context.Orders.Add(new Order { Name = "Order 1" });
+				context.Orders.Add(new Order { Name = "Order 2" });
+				context.Orders.Add(new Order { Name = "Order 3" });
 				await context.SaveChangesAsync();
 			}
 
