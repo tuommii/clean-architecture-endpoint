@@ -1,5 +1,4 @@
 ﻿using Sanoma.Application.Common.Interfaces;
-using Sanoma.Infrastructure.Files;
 using Sanoma.Infrastructure.Identity;
 using Sanoma.Infrastructure.Persistence;
 using Sanoma.Infrastructure.Services;
@@ -31,13 +30,12 @@ namespace Sanoma.Infrastructure
 
                 services.AddDefaultIdentity<ApplicationUser>()
                     .AddEntityFrameworkStores<ApplicationDbContext>();
-            
+
             services.AddIdentityServer()
                 .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
 
             services.AddTransient<IDateTime, DateTimeService>();
             services.AddTransient<IIdentityService, IdentityService>();
-            services.AddTransient<ICsvFileBuilder, CsvFileBuilder>();
 
             services.AddAuthentication()
                 .AddIdentityServerJwt();

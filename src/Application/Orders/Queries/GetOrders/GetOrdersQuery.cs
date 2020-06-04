@@ -1,10 +1,8 @@
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Sanoma.Application.Common.Interfaces;
-using Sanoma.Domain.Enums;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;

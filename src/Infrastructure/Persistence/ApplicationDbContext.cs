@@ -30,10 +30,6 @@ namespace Sanoma.Infrastructure.Persistence
             _dateTime = dateTime;
         }
 
-        public DbSet<TodoList> TodoLists { get; set; }
-
-        public DbSet<TodoItem> TodoItems { get; set; }
-
 		public DbSet<Order> Orders { get; set; }
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
