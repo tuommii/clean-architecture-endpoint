@@ -27,7 +27,7 @@ namespace Sanoma.Infrastructure.Persistence
 				{
 					Name = "New Laptop",
 					EmailAddress = "mtuomine@student.hive.fi",
-					TotalAmount = 2499.99,
+					TotalAmount = 2499.99M,
 					WillCall = false,
 					SubmitDate = DateTime.Now
 				});

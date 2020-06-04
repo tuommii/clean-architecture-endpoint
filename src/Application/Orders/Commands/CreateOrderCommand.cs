@@ -14,7 +14,7 @@ namespace Sanoma.Application.Orders.Commands
 
 		public DateTime? SubmitDate { get; set; }
 
-		public double TotalAmount { get; set; }
+		public decimal TotalAmount { get; set; }
 
 		public bool WillCall { get; set; }
 
