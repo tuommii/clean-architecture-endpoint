@@ -84,6 +84,22 @@
           "name": {
             "type": "string",
             "nullable": true
+          },
+          "emailAddress": {
+            "type": "string",
+            "nullable": true
+          },
+          "submitDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "totalAmount": {
+            "type": "number",
+            "format": "double"
+          },
+          "willCall": {
+            "type": "boolean"
           }
         }
       },
@@ -94,6 +110,22 @@
           "name": {
             "type": "string",
             "nullable": true
+          },
+          "emailAddress": {
+            "type": "string",
+            "nullable": true
+          },
+          "submitDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "totalAmount": {
+            "type": "number",
+            "format": "double"
+          },
+          "willCall": {
+            "type": "boolean"
           }
         }
       }

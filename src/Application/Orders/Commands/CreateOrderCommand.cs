@@ -1,3 +1,4 @@
+using System;
 using Sanoma.Application.Common.Interfaces;
 using Sanoma.Domain.Entities;
 using MediatR;
@@ -8,7 +9,15 @@ namespace Sanoma.Application.Orders.Commands
 {
     public class CreateOrderCommand : IRequest<int>
     {
-        public string Name { get; set; }
+		public string Name { get; set; }
+		public string EmailAddress { get; set; }
+
+		public DateTime? SubmitDate { get; set; }
+
+		public double TotalAmount { get; set; }
+
+		public bool WillCall { get; set; }
+
     }
 
 	public class CreateOrderCommandHandler : IRequestHandler<CreateOrderCommand, int>
@@ -24,7 +33,11 @@ namespace Sanoma.Application.Orders.Commands
         {
             var entity = new Order
             {
-				Name = request.Name
+				Name = request.Name,
+				EmailAddress = request.EmailAddress,
+				SubmitDate = request.SubmitDate,
+				TotalAmount = request.TotalAmount,
+				WillCall = request.WillCall
             };
 
             _context.Orders.Add(entity);

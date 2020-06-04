@@ -30,7 +30,7 @@ namespace Sanoma.Application.Orders.Queries.GetOrders
 			{
 				Lists = await _context.Orders
 					.ProjectTo<OrderDto>(_mapper.ConfigurationProvider)
-					.OrderBy(o => o.Name)
+					.OrderBy(o => o.SubmitDate)
 					.ToListAsync(cancellationToken)
 			};
         }

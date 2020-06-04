@@ -1,4 +1,5 @@
-﻿using Sanoma.Domain.Entities;
+﻿using System;
+using Sanoma.Domain.Entities;
 using Sanoma.Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity;
 using System.Linq;
@@ -22,9 +23,14 @@ namespace Sanoma.Infrastructure.Persistence
         {
 			if (!context.Orders.Any())
 			{
-				context.Orders.Add(new Order { Name = "Order 1" });
-				context.Orders.Add(new Order { Name = "Order 2" });
-				context.Orders.Add(new Order { Name = "Order 3" });
+				context.Orders.Add(new Order
+				{
+					Name = "New Laptop",
+					EmailAddress = "mtuomine@student.hive.fi",
+					TotalAmount = 2499.99,
+					WillCall = false,
+					SubmitDate = DateTime.Now
+				});
 				await context.SaveChangesAsync();
 			}
         }

@@ -180,6 +180,10 @@ export interface IOrdersVm {
 export class OrderDto implements IOrderDto {
     id?: number;
     name?: string | undefined;
+    emailAddress?: string | undefined;
+    submitDate?: Date | undefined;
+    totalAmount?: number;
+    willCall?: boolean;
 
     constructor(data?: IOrderDto) {
         if (data) {
@@ -194,6 +198,10 @@ export class OrderDto implements IOrderDto {
         if (_data) {
             this.id = _data["id"];
             this.name = _data["name"];
+            this.emailAddress = _data["emailAddress"];
+            this.submitDate = _data["submitDate"] ? new Date(_data["submitDate"].toString()) : <any>undefined;
+            this.totalAmount = _data["totalAmount"];
+            this.willCall = _data["willCall"];
         }
     }
 
@@ -208,6 +216,10 @@ export class OrderDto implements IOrderDto {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id;
         data["name"] = this.name;
+        data["emailAddress"] = this.emailAddress;
+        data["submitDate"] = this.submitDate ? this.submitDate.toISOString() : <any>undefined;
+        data["totalAmount"] = this.totalAmount;
+        data["willCall"] = this.willCall;
         return data; 
     }
 }
@@ -215,10 +227,18 @@ export class OrderDto implements IOrderDto {
 export interface IOrderDto {
     id?: number;
     name?: string | undefined;
+    emailAddress?: string | undefined;
+    submitDate?: Date | undefined;
+    totalAmount?: number;
+    willCall?: boolean;
 }
 
 export class CreateOrderCommand implements ICreateOrderCommand {
     name?: string | undefined;
+    emailAddress?: string | undefined;
+    submitDate?: Date | undefined;
+    totalAmount?: number;
+    willCall?: boolean;
 
     constructor(data?: ICreateOrderCommand) {
         if (data) {
@@ -232,6 +252,10 @@ export class CreateOrderCommand implements ICreateOrderCommand {
     init(_data?: any) {
         if (_data) {
             this.name = _data["name"];
+            this.emailAddress = _data["emailAddress"];
+            this.submitDate = _data["submitDate"] ? new Date(_data["submitDate"].toString()) : <any>undefined;
+            this.totalAmount = _data["totalAmount"];
+            this.willCall = _data["willCall"];
         }
     }
 
@@ -245,12 +269,20 @@ export class CreateOrderCommand implements ICreateOrderCommand {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["name"] = this.name;
+        data["emailAddress"] = this.emailAddress;
+        data["submitDate"] = this.submitDate ? this.submitDate.toISOString() : <any>undefined;
+        data["totalAmount"] = this.totalAmount;
+        data["willCall"] = this.willCall;
         return data; 
     }
 }
 
 export interface ICreateOrderCommand {
     name?: string | undefined;
+    emailAddress?: string | undefined;
+    submitDate?: Date | undefined;
+    totalAmount?: number;
+    willCall?: boolean;
 }
 
 export class SwaggerException extends Error {
