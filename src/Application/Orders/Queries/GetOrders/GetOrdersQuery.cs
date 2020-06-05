@@ -6,14 +6,15 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Collections;
 
 namespace Sanoma.Application.Orders.Queries.GetOrders
 {
-    public class GetOrdersQuery : IRequest<OrdersVm>
+    public class GetOrdersQuery : IRequest<IList>
     {
     }
 
-	public class GetOrdersQueryHandler : IRequestHandler<GetOrdersQuery, OrdersVm>
+	public class GetOrdersQueryHandler : IRequestHandler<GetOrdersQuery, IList>
     {
         private readonly IApplicationDbContext _context;
         private readonly IMapper _mapper;
@@ -24,15 +25,15 @@ namespace Sanoma.Application.Orders.Queries.GetOrders
             _mapper = mapper;
         }
 
-        public async Task<OrdersVm> Handle(GetOrdersQuery request, CancellationToken cancellationToken)
+        public async Task<IList> Handle(GetOrdersQuery request, CancellationToken cancellationToken)
         {
-			return new OrdersVm
-			{
-				Lists = await _context.Orders
+			// return new IList
+			// {
+				return await _context.Orders
 					.ProjectTo<OrderDto>(_mapper.ConfigurationProvider)
 					.OrderBy(o => o.SubmitDate)
-					.ToListAsync(cancellationToken)
-			};
+					.ToListAsync(cancellationToken);
+			// };
         }
     }
 }

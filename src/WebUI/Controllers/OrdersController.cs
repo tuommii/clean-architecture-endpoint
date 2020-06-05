@@ -3,20 +3,21 @@ using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Sanoma.Application.Orders.Commands;
 using Sanoma.Domain.Entities;
+using System.Collections.Generic;
 
 namespace Sanoma.WebUI.Controllers
 {
     public class OrdersController : ApiController
     {
         [HttpGet]
-        public async Task<ActionResult<OrdersVm>> GetAll()
+        public async Task<ActionResult<IList<OrderDto>>> GetAll()
         {
 			var vm = await Mediator.Send(new GetOrdersQuery());
 			return base.Ok(vm);
         }
 
 		[HttpGet("{id}")]
-        public async Task<ActionResult<Order>> GetById(int id)
+        public async Task<ActionResult<OrderDto>> GetById(int id)
         {
 			var vm = await Mediator.Send(new GetOrderQuery { Id = id});
 			return base.Ok(vm);

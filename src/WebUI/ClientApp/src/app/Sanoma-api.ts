@@ -15,9 +15,9 @@ import { HttpClient, HttpHeaders, HttpResponse, HttpResponseBase } from '@angula
 export const API_BASE_URL = new InjectionToken<string>('API_BASE_URL');
 
 export interface IOrdersClient {
-    getAll(): Observable<OrdersVm>;
+    getAll(): Observable<OrderDto[]>;
     create(command: CreateOrderCommand): Observable<number>;
-    getById(id: number): Observable<Order>;
+    getById(id: number): Observable<OrderDto>;
     update(id: number, command: UpdateOrderCommand): Observable<FileResponse>;
     delete(id: number): Observable<FileResponse>;
 }
@@ -35,7 +35,7 @@ export class OrdersClient implements IOrdersClient {
         this.baseUrl = baseUrl ? baseUrl : "";
     }
 
-    getAll(): Observable<OrdersVm> {
+    getAll(): Observable<OrderDto[]> {
         let url_ = this.baseUrl + "/api/Orders";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -54,14 +54,14 @@ export class OrdersClient implements IOrdersClient {
                 try {
                     return this.processGetAll(<any>response_);
                 } catch (e) {
-                    return <Observable<OrdersVm>><any>_observableThrow(e);
+                    return <Observable<OrderDto[]>><any>_observableThrow(e);
                 }
             } else
-                return <Observable<OrdersVm>><any>_observableThrow(response_);
+                return <Observable<OrderDto[]>><any>_observableThrow(response_);
         }));
     }
 
-    protected processGetAll(response: HttpResponseBase): Observable<OrdersVm> {
+    protected processGetAll(response: HttpResponseBase): Observable<OrderDto[]> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -72,7 +72,11 @@ export class OrdersClient implements IOrdersClient {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = OrdersVm.fromJS(resultData200);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(OrderDto.fromJS(item));
+            }
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -80,7 +84,7 @@ export class OrdersClient implements IOrdersClient {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<OrdersVm>(<any>null);
+        return _observableOf<OrderDto[]>(<any>null);
     }
 
     create(command: CreateOrderCommand): Observable<number> {
@@ -135,7 +139,7 @@ export class OrdersClient implements IOrdersClient {
         return _observableOf<number>(<any>null);
     }
 
-    getById(id: number): Observable<Order> {
+    getById(id: number): Observable<OrderDto> {
         let url_ = this.baseUrl + "/api/Orders/{id}";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
@@ -157,14 +161,14 @@ export class OrdersClient implements IOrdersClient {
                 try {
                     return this.processGetById(<any>response_);
                 } catch (e) {
-                    return <Observable<Order>><any>_observableThrow(e);
+                    return <Observable<OrderDto>><any>_observableThrow(e);
                 }
             } else
-                return <Observable<Order>><any>_observableThrow(response_);
+                return <Observable<OrderDto>><any>_observableThrow(response_);
         }));
     }
 
-    protected processGetById(response: HttpResponseBase): Observable<Order> {
+    protected processGetById(response: HttpResponseBase): Observable<OrderDto> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -175,7 +179,7 @@ export class OrdersClient implements IOrdersClient {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = Order.fromJS(resultData200);
+            result200 = OrderDto.fromJS(resultData200);
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -183,7 +187,7 @@ export class OrdersClient implements IOrdersClient {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<Order>(<any>null);
+        return _observableOf<OrderDto>(<any>null);
     }
 
     update(id: number, command: UpdateOrderCommand): Observable<FileResponse> {
@@ -289,50 +293,6 @@ export class OrdersClient implements IOrdersClient {
     }
 }
 
-export class OrdersVm implements IOrdersVm {
-    lists?: OrderDto[] | undefined;
-
-    constructor(data?: IOrdersVm) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            if (Array.isArray(_data["lists"])) {
-                this.lists = [] as any;
-                for (let item of _data["lists"])
-                    this.lists!.push(OrderDto.fromJS(item));
-            }
-        }
-    }
-
-    static fromJS(data: any): OrdersVm {
-        data = typeof data === 'object' ? data : {};
-        let result = new OrdersVm();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        if (Array.isArray(this.lists)) {
-            data["lists"] = [];
-            for (let item of this.lists)
-                data["lists"].push(item.toJSON());
-        }
-        return data; 
-    }
-}
-
-export interface IOrdersVm {
-    lists?: OrderDto[] | undefined;
-}
-
 export class OrderDto implements IOrderDto {
     id?: number;
     name?: string | undefined;
@@ -381,105 +341,6 @@ export class OrderDto implements IOrderDto {
 }
 
 export interface IOrderDto {
-    id?: number;
-    name?: string | undefined;
-    emailAddress?: string | undefined;
-    submitDate?: Date | undefined;
-    totalAmount?: number;
-    willCall?: boolean;
-}
-
-export abstract class AuditableEntity implements IAuditableEntity {
-    createdBy?: string | undefined;
-    created?: Date;
-    lastModifiedBy?: string | undefined;
-    lastModified?: Date | undefined;
-
-    constructor(data?: IAuditableEntity) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.createdBy = _data["createdBy"];
-            this.created = _data["created"] ? new Date(_data["created"].toString()) : <any>undefined;
-            this.lastModifiedBy = _data["lastModifiedBy"];
-            this.lastModified = _data["lastModified"] ? new Date(_data["lastModified"].toString()) : <any>undefined;
-        }
-    }
-
-    static fromJS(data: any): AuditableEntity {
-        data = typeof data === 'object' ? data : {};
-        throw new Error("The abstract class 'AuditableEntity' cannot be instantiated.");
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["createdBy"] = this.createdBy;
-        data["created"] = this.created ? this.created.toISOString() : <any>undefined;
-        data["lastModifiedBy"] = this.lastModifiedBy;
-        data["lastModified"] = this.lastModified ? this.lastModified.toISOString() : <any>undefined;
-        return data; 
-    }
-}
-
-export interface IAuditableEntity {
-    createdBy?: string | undefined;
-    created?: Date;
-    lastModifiedBy?: string | undefined;
-    lastModified?: Date | undefined;
-}
-
-export class Order extends AuditableEntity implements IOrder {
-    id?: number;
-    name?: string | undefined;
-    emailAddress?: string | undefined;
-    submitDate?: Date | undefined;
-    totalAmount?: number;
-    willCall?: boolean;
-
-    constructor(data?: IOrder) {
-        super(data);
-    }
-
-    init(_data?: any) {
-        super.init(_data);
-        if (_data) {
-            this.id = _data["id"];
-            this.name = _data["name"];
-            this.emailAddress = _data["emailAddress"];
-            this.submitDate = _data["submitDate"] ? new Date(_data["submitDate"].toString()) : <any>undefined;
-            this.totalAmount = _data["totalAmount"];
-            this.willCall = _data["willCall"];
-        }
-    }
-
-    static fromJS(data: any): Order {
-        data = typeof data === 'object' ? data : {};
-        let result = new Order();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["name"] = this.name;
-        data["emailAddress"] = this.emailAddress;
-        data["submitDate"] = this.submitDate ? this.submitDate.toISOString() : <any>undefined;
-        data["totalAmount"] = this.totalAmount;
-        data["willCall"] = this.willCall;
-        super.toJSON(data);
-        return data; 
-    }
-}
-
-export interface IOrder extends IAuditableEntity {
     id?: number;
     name?: string | undefined;
     emailAddress?: string | undefined;

@@ -18,7 +18,10 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/OrdersVm"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/OrderDto"
+                  }
                 }
               }
             }
@@ -81,7 +84,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Order"
+                  "$ref": "#/components/schemas/OrderDto"
                 }
               }
             }
@@ -166,19 +169,6 @@
   },
   "components": {
     "schemas": {
-      "OrdersVm": {
-        "type": "object",
-        "additionalProperties": false,
-        "properties": {
-          "lists": {
-            "type": "array",
-            "nullable": true,
-            "items": {
-              "$ref": "#/components/schemas/OrderDto"
-            }
-          }
-        }
-      },
       "OrderDto": {
         "type": "object",
         "additionalProperties": false,
@@ -206,67 +196,6 @@
           },
           "willCall": {
             "type": "boolean"
-          }
-        }
-      },
-      "Order": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/AuditableEntity"
-          },
-          {
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-              "id": {
-                "type": "integer",
-                "format": "int32"
-              },
-              "name": {
-                "type": "string",
-                "nullable": true
-              },
-              "emailAddress": {
-                "type": "string",
-                "nullable": true
-              },
-              "submitDate": {
-                "type": "string",
-                "format": "date-time",
-                "nullable": true
-              },
-              "totalAmount": {
-                "type": "number",
-                "format": "decimal"
-              },
-              "willCall": {
-                "type": "boolean"
-              }
-            }
-          }
-        ]
-      },
-      "AuditableEntity": {
-        "type": "object",
-        "x-abstract": true,
-        "additionalProperties": false,
-        "properties": {
-          "createdBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "created": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "lastModifiedBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "lastModified": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
           }
         }
       },
