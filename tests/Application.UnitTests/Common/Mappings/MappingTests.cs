@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Sanoma.Application.Common.Mappings;
-using Sanoma.Application.TodoLists.Queries.GetTodos;
+using Sanoma.Application.Orders.Queries.GetOrders;
+
 using Sanoma.Domain.Entities;
 using NUnit.Framework;
 using System;
@@ -27,10 +28,9 @@ namespace Sanoma.Application.UnitTests.Common.Mappings
         {
             _configuration.AssertConfigurationIsValid();
         }
-        
+
         [Test]
-        [TestCase(typeof(TodoList), typeof(TodoListDto))]
-        [TestCase(typeof(TodoItem), typeof(TodoItemDto))]
+        [TestCase(typeof(Order), typeof(OrderDto))]
         public void ShouldSupportMappingFromSourceToDestination(Type source, Type destination)
         {
             var instance = Activator.CreateInstance(source);
