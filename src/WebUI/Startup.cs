@@ -41,7 +41,7 @@ namespace Sanoma.WebUI
             services.AddControllersWithViews(options =>
                 options.Filters.Add(new ApiExceptionFilter()));
 
-            services.AddRazorPages();
+            // services.AddRazorPages();
 
             // Customise default API behaviour
             services.Configure<ApiBehaviorOptions>(options =>
@@ -50,10 +50,10 @@ namespace Sanoma.WebUI
             });
 
             // In production, the Angular files will be served from this directory
-            services.AddSpaStaticFiles(configuration =>
-            {
-                configuration.RootPath = "ClientApp/dist";
-            });
+            // services.AddSpaStaticFiles(configuration =>
+            // {
+            //     configuration.RootPath = "ClientApp/dist";
+            // });
 
             services.AddOpenApiDocument(configure =>
             {
@@ -109,7 +109,7 @@ namespace Sanoma.WebUI
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller}/{action=Index}/{id?}");
-                endpoints.MapRazorPages();
+                // endpoints.MapRazorPages();
             });
 
             // app.UseSpa(spa =>
