@@ -38,6 +38,13 @@ namespace Sanoma.WebUI.Controllers
 			await Mediator.Send(command);
 			return NoContent();
 		}
+
+		[HttpDelete("{id}")]
+		public async Task<ActionResult> Delete(int id)
+		{
+			await Mediator.Send(new DeleteOrderCommand { Id = id });
+			return NoContent();
+		}
 	}
 
     //     [HttpPut("{id}")]
