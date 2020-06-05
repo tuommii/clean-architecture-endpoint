@@ -36,7 +36,7 @@ export class OrdersClient implements IOrdersClient {
     }
 
     getAll(): Observable<OrderDto[]> {
-        let url_ = this.baseUrl + "/api/Orders";
+        let url_ = this.baseUrl + "/api/orders";
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {
@@ -88,7 +88,7 @@ export class OrdersClient implements IOrdersClient {
     }
 
     create(command: CreateOrderCommand): Observable<number> {
-        let url_ = this.baseUrl + "/api/Orders";
+        let url_ = this.baseUrl + "/api/orders";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(command);
@@ -140,7 +140,7 @@ export class OrdersClient implements IOrdersClient {
     }
 
     getById(id: number): Observable<OrderDto> {
-        let url_ = this.baseUrl + "/api/Orders/{id}";
+        let url_ = this.baseUrl + "/api/orders/{id}";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
         url_ = url_.replace("{id}", encodeURIComponent("" + id)); 
@@ -191,7 +191,7 @@ export class OrdersClient implements IOrdersClient {
     }
 
     update(id: number, command: UpdateOrderCommand): Observable<FileResponse> {
-        let url_ = this.baseUrl + "/api/Orders/{id}";
+        let url_ = this.baseUrl + "/api/orders/{id}";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
         url_ = url_.replace("{id}", encodeURIComponent("" + id)); 
@@ -244,7 +244,7 @@ export class OrdersClient implements IOrdersClient {
     }
 
     delete(id: number): Observable<FileResponse> {
-        let url_ = this.baseUrl + "/api/Orders/{id}";
+        let url_ = this.baseUrl + "/api/orders/{id}";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
         url_ = url_.replace("{id}", encodeURIComponent("" + id)); 

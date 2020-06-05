@@ -2,7 +2,6 @@ using Sanoma.Application.Orders.Queries.GetOrders;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Sanoma.Application.Orders.Commands;
-using Sanoma.Domain.Entities;
 using System.Collections.Generic;
 
 namespace Sanoma.WebUI.Controllers

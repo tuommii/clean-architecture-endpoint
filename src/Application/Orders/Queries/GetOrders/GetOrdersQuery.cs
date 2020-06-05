@@ -27,13 +27,10 @@ namespace Sanoma.Application.Orders.Queries.GetOrders
 
         public async Task<IList> Handle(GetOrdersQuery request, CancellationToken cancellationToken)
         {
-			// return new IList
-			// {
-				return await _context.Orders
-					.ProjectTo<OrderDto>(_mapper.ConfigurationProvider)
-					.OrderBy(o => o.SubmitDate)
-					.ToListAsync(cancellationToken);
-			// };
+			return await _context.Orders
+				.ProjectTo<OrderDto>(_mapper.ConfigurationProvider)
+				.OrderBy(o => o.SubmitDate)
+				.ToListAsync(cancellationToken);
         }
     }
 }

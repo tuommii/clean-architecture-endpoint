@@ -43,6 +43,7 @@ namespace Sanoma.WebUI
 
             // services.AddRazorPages();
 
+			services.AddRouting(o => o.LowercaseUrls = true);
             // Customise default API behaviour
             services.Configure<ApiBehaviorOptions>(options =>
             {
