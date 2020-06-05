@@ -1,4 +1,3 @@
-using System;
 using FluentValidation;
 
 namespace Sanoma.Application.Orders.Commands
