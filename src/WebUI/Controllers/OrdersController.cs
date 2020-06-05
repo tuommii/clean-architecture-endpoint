@@ -27,6 +27,17 @@ namespace Sanoma.WebUI.Controllers
 		{
 			return await Mediator.Send(command);
 		}
+
+		[HttpPut("{id}")]
+		public async Task<ActionResult> Update(int id, UpdateOrderCommand command)
+		{
+			if (id != command.Id)
+			{
+				return BadRequest();
+			}
+			await Mediator.Send(command);
+			return NoContent();
+		}
 	}
 
     //     [HttpPut("{id}")]
