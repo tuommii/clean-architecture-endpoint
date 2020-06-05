@@ -11,7 +11,7 @@
         "tags": [
           "Orders"
         ],
-        "operationId": "Orders_Get",
+        "operationId": "Orders_GetAll",
         "responses": {
           "200": {
             "description": "",

@@ -15,7 +15,7 @@ import { HttpClient, HttpHeaders, HttpResponse, HttpResponseBase } from '@angula
 export const API_BASE_URL = new InjectionToken<string>('API_BASE_URL');
 
 export interface IOrdersClient {
-    get(): Observable<OrdersVm>;
+    getAll(): Observable<OrdersVm>;
     create(command: CreateOrderCommand): Observable<number>;
     getById(id: number): Observable<Order>;
 }
@@ -33,7 +33,7 @@ export class OrdersClient implements IOrdersClient {
         this.baseUrl = baseUrl ? baseUrl : "";
     }
 
-    get(): Observable<OrdersVm> {
+    getAll(): Observable<OrdersVm> {
         let url_ = this.baseUrl + "/api/Orders";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -46,11 +46,11 @@ export class OrdersClient implements IOrdersClient {
         };
 
         return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGet(response_);
+            return this.processGetAll(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processGet(<any>response_);
+                    return this.processGetAll(<any>response_);
                 } catch (e) {
                     return <Observable<OrdersVm>><any>_observableThrow(e);
                 }
@@ -59,7 +59,7 @@ export class OrdersClient implements IOrdersClient {
         }));
     }
 
-    protected processGet(response: HttpResponseBase): Observable<OrdersVm> {
+    protected processGetAll(response: HttpResponseBase): Observable<OrdersVm> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 

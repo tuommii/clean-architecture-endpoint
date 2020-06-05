@@ -1,5 +1,6 @@
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using Sanoma.Application.Common.Exceptions;
 using Sanoma.Application.Common.Interfaces;
 using MediatR;
 using Sanoma.Domain.Entities;
@@ -28,13 +29,14 @@ namespace Sanoma.Application.Orders.Queries.GetOrders
 
         public async Task<OrderDto> Handle(GetOrderQuery request, CancellationToken cancellationToken)
         {
+			var order = await _context.Orders.FindAsync(request.Id);
 
-			var order = await _context.Orders
-				.ProjectTo<OrderDto>(_mapper.ConfigurationProvider)
-				.FirstAsync(cancellationToken);
-				// FindAsync(request.Id);
-			// var order = await _context.Orders.FindAsync(request.Id);
-			return order;
+			if (order == null)
+            {
+                throw new NotFoundException(nameof(Order), request.Id);
+            }
+
+			return _mapper.Map<OrderDto>(order);
         }
     }
 }
