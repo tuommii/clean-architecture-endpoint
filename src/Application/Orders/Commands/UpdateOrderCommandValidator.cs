@@ -3,9 +3,9 @@ using FluentValidation;
 
 namespace Sanoma.Application.Orders.Commands
 {
-    public class CreateOrderCommandValidator : AbstractValidator<CreateOrderCommand>
+    public class UpdateOrderCommandValidator : AbstractValidator<UpdateOrderCommand>
     {
-        public CreateOrderCommandValidator()
+        public UpdateOrderCommandValidator()
         {
             RuleFor(o => o.Name)
                 .MaximumLength(300)
