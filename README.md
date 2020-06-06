@@ -5,9 +5,12 @@ Made entirely on *Linux* and *Visual Studio Code*, with
 *Widows* also.
 
 Unfortunately, I didn't get the tests to work on Linux. I tried with:
-- LocalDB: `LocalDB is not supported on this platform.`
-- In memory database: `Relational-specific methods can only be used when the context is using a relational database provider.`
-- SQLite: `I think i had path/connection string problem`
+- LocalDB:
+	- **LocalDB is not supported on this platform.**
+- In memory database:
+	- **Relational-specific methods can only be used when the context is using a relational database provider.**
+- SQLite:
+	- **I think i had path/connection string problem**
 
 ## How To Run It
 
