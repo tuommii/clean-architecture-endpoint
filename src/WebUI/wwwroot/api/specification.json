@@ -192,10 +192,12 @@
           },
           "totalAmount": {
             "type": "number",
-            "format": "decimal"
+            "format": "decimal",
+            "nullable": true
           },
           "willCall": {
-            "type": "boolean"
+            "type": "boolean",
+            "nullable": true
           }
         }
       },
@@ -218,10 +220,12 @@
           },
           "totalAmount": {
             "type": "number",
-            "format": "decimal"
+            "format": "decimal",
+            "nullable": true
           },
           "willCall": {
-            "type": "boolean"
+            "type": "boolean",
+            "nullable": true
           }
         }
       },
@@ -248,10 +252,12 @@
           },
           "totalAmount": {
             "type": "number",
-            "format": "decimal"
+            "format": "decimal",
+            "nullable": true
           },
           "willCall": {
-            "type": "boolean"
+            "type": "boolean",
+            "nullable": true
           }
         }
       }

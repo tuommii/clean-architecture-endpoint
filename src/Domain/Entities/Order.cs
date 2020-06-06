@@ -13,8 +13,8 @@ namespace Sanoma.Domain.Entities
 
 		public DateTime? SubmitDate { get; set; }
 
-		public decimal TotalAmount { get; set; }
+		public decimal? TotalAmount { get; set; }
 
-		public bool WillCall { get; set; }
+		public bool? WillCall { get; set; }
     }
 }

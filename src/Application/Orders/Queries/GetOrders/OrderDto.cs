@@ -15,9 +15,9 @@ namespace Sanoma.Application.Orders.Queries.GetOrders
 
 		public DateTime? SubmitDate { get; set; }
 
-		public decimal TotalAmount { get; set; }
+		public decimal? TotalAmount { get; set; }
 
-		public bool WillCall { get; set; }
+		public bool? WillCall { get; set; }
 
         public void Mapping(Profile profile)
         {

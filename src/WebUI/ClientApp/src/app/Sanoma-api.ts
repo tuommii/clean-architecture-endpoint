@@ -298,8 +298,8 @@ export class OrderDto implements IOrderDto {
     name?: string | undefined;
     emailAddress?: string | undefined;
     submitDate?: Date | undefined;
-    totalAmount?: number;
-    willCall?: boolean;
+    totalAmount?: number | undefined;
+    willCall?: boolean | undefined;
 
     constructor(data?: IOrderDto) {
         if (data) {
@@ -345,16 +345,16 @@ export interface IOrderDto {
     name?: string | undefined;
     emailAddress?: string | undefined;
     submitDate?: Date | undefined;
-    totalAmount?: number;
-    willCall?: boolean;
+    totalAmount?: number | undefined;
+    willCall?: boolean | undefined;
 }
 
 export class CreateOrderCommand implements ICreateOrderCommand {
     name?: string | undefined;
     emailAddress?: string | undefined;
     submitDate?: Date | undefined;
-    totalAmount?: number;
-    willCall?: boolean;
+    totalAmount?: number | undefined;
+    willCall?: boolean | undefined;
 
     constructor(data?: ICreateOrderCommand) {
         if (data) {
@@ -397,8 +397,8 @@ export interface ICreateOrderCommand {
     name?: string | undefined;
     emailAddress?: string | undefined;
     submitDate?: Date | undefined;
-    totalAmount?: number;
-    willCall?: boolean;
+    totalAmount?: number | undefined;
+    willCall?: boolean | undefined;
 }
 
 export class UpdateOrderCommand implements IUpdateOrderCommand {
@@ -406,8 +406,8 @@ export class UpdateOrderCommand implements IUpdateOrderCommand {
     name?: string | undefined;
     emailAddress?: string | undefined;
     submitDate?: Date | undefined;
-    totalAmount?: number;
-    willCall?: boolean;
+    totalAmount?: number | undefined;
+    willCall?: boolean | undefined;
 
     constructor(data?: IUpdateOrderCommand) {
         if (data) {
@@ -453,8 +453,8 @@ export interface IUpdateOrderCommand {
     name?: string | undefined;
     emailAddress?: string | undefined;
     submitDate?: Date | undefined;
-    totalAmount?: number;
-    willCall?: boolean;
+    totalAmount?: number | undefined;
+    willCall?: boolean | undefined;
 }
 
 export interface FileResponse {
