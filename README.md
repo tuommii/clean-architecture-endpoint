@@ -6,7 +6,7 @@
 
 Made entirely on *Linux* and *Visual Studio Code*, with
 *no previous experience* of C# and its ecosystem. Hopefully it runs on
-*Widows* also.
+*Windows* also.
 
 ## How To Run It
 
