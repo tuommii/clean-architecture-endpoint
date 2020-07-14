@@ -1,4 +1,4 @@
-# REST API endpoint with [template](https://github.com/jasontaylordev/CleanArchitecture)
+# REST API endpoint based on this [template](https://github.com/jasontaylordev/CleanArchitecture)
 
 <h1 align="left">
     <img src="/screenshot.png" height="200" />
